@@ -1,17 +1,17 @@
-import { createElement } from '../render.js';
+import {createElement} from '../render.js';
 
-const createFilmsView = () => `
-filmsView`;
+const createFilmsViewTemplate = () => '<section class="films"></section>';
 
 export default class FilmsView {
   getTemplate() {
-    return createFilmsView();
+    return createFilmsViewTemplate();
   }
 
   getElement() {
     if (!this.element) {
       this.element = createElement(this.getTemplate());
     }
+
     return this.element;
   }
 
@@ -19,5 +19,3 @@ export default class FilmsView {
     this.element = null;
   }
 }
-
-

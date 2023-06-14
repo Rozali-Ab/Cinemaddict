@@ -17,8 +17,12 @@ export default class FilmsPresenter {
   filmListContainerComponent = new FilmListContainerView();
   filmButtonMoreComponent = new FilmButtonMoreView();
 
-  init = (container) => {
+  init = (container, filmsModel, commentsModel) => {
     this.container = container;
+    this.filmsModel = filmsModel;
+    this.commentsModel = commentsModel;
+
+    this.films = [...filmsModel.get()];
 
     render(this.sortComponent, this.container);
     render(this.filmsComponent, this.container);
@@ -31,6 +35,8 @@ export default class FilmsPresenter {
 
     render(this.filmButtonMoreComponent, this.filmListContainerComponent.getElement());
 
-    render(new FilmDetailsView(), this.container.parentElement);
+    const comments = [...this.commentsModel.get(this.films[0])];
+
+    render(new FilmDetailsView(this.films[0], comments), this.container.parentElement);
   };
 }

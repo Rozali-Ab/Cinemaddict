@@ -51,7 +51,9 @@ const generateFilms = () => {
     return {
       id: String(index +1),
       comments: (hasComments)
-        ? Array.from({length: filmCommentsCount}, (_value, commentIndex) => String(totalCommentsCount - commentIndex))
+        ? Array.from({length: filmCommentsCount},
+          (_value, commentIndex) => String(totalCommentsCount - commentIndex)
+        )
         : [],
       filmInfo: film,
     };

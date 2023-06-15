@@ -27,10 +27,10 @@ const generateFilm = () => ({
   actors: Array.from({length: NAME_COUNT}, () => `${getRandomValue(names)} ${getRandomValue(surnames)}`),
   release: {
     date: getDate(),
-    releaseCountry: getRandomValue(countries)
+    releaseСountry: getRandomValue(countries)
   },
   runtime: getRandomInteger(Runtime.MIN, Runtime.MAX),
-  genre: Array.from({length: getRandomInteger(GenreCount.MIN, GenreCount.MAX)}, () => getRandomValue(genres)),
+  genre:  Array.from({length: getRandomInteger(GenreCount.MIN, GenreCount.MAX)}, () => getRandomValue(genres)),
   description
 });
 
@@ -49,7 +49,7 @@ const generateFilms = () => {
     totalCommentsCount += filmCommentsCount;
 
     return {
-      id: String(index +1),
+      id: String(index + 1),
       comments: (hasComments)
         ? Array.from({length: filmCommentsCount},
           (_value, commentIndex) => String(totalCommentsCount - commentIndex)

@@ -8,8 +8,8 @@ import CommentsModel from './model/comments-model.js';
 
 import { render } from './render.js';
 
-const header = document.querySelector('.header');
 const body = document.querySelector('body');
+const header = document.querySelector('.header');
 const main = body.querySelector('.main');
 const footerStatistics = document.querySelector('.footer__statistics');
 

@@ -19,7 +19,7 @@ export default class FilmCardView {
   }
 
   getTemplate() {
-    return createFilmCardView();
+    return createFilmCardView(this.film);
   }
 
   getElement() {

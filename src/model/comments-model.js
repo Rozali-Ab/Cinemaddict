@@ -1,6 +1,6 @@
-import { generateComments } from '../mock/comment.js';
+import {generateComments} from '../mock/comment.js';
 
-export default class CommensModel {
+export default class CommentsModel {
   filmsModel = null;
   allComments = [];
   comments = [];
@@ -16,7 +16,8 @@ export default class CommensModel {
 
   get = (film) => {
     this.comments = film.comments.map((commentId) =>
-      this.allComments.find((comment) => comment.id === commentId)
+      this.allComments.find((comment) =>
+        comment.id === commentId)
     );
 
     return this.comments;

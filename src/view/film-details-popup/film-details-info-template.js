@@ -73,7 +73,7 @@ export const createFilmDetailsInfoTemplate = (filmInfo) => {
           </tr>
         </table>
 
-        < class="film-details__film-description">
+        <p class="film-details__film-description">
           ${description}
         </p>
       </div>

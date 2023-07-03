@@ -35,11 +35,10 @@ export default class FilmsPresenter {
     render(this.#filmListContainerComponent, this.#filmListComponent.element);
 
     this.#films.forEach((film) => {
-      this.#renderFilm(film, this.#filmListContainerComponent.element);
+      this.#renderFilm(film, this.#filmListContainerComponent);
     });
 
     render(this.#filmButtonMoreComponent, this.#filmListComponent.element);
-
   };
 
   #renderFilm(film, container) {
@@ -63,7 +62,8 @@ export default class FilmsPresenter {
     const closeButtonFilmDetailsElement = this.#filmDetailsComponent.element.querySelector('.film-details__close-btn');
 
     closeButtonFilmDetailsElement.addEventListener('click', () => {
-
+      this.#removeFilmDetailsComponent();
+      document.removeEventListener('keydown', this.#onEscKeyDown);
     });
 
     render(this.#filmDetailsComponent, this.#container.parentElement);
@@ -87,5 +87,4 @@ export default class FilmsPresenter {
       document.removeEventListener('keydown', this.#onEscKeyDown);
     }
   };
-
 }

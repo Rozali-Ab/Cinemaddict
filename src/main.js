@@ -16,10 +16,10 @@ const footerStatistics = document.querySelector('.footer__statistics');
 const filmsModel = new FilmsModel();
 const commentsModel = new CommentsModel(filmsModel);
 
-const filmsPresenter = new FilmsPresenter();
+const filmsPresenter = new FilmsPresenter(main, filmsModel, commentsModel);
 
 render(new HeaderProfileView(), header);
 render(new FilterView(), main);
 render(new FooterStatisticsView(), footerStatistics);
 
-filmsPresenter.init(main, filmsModel, commentsModel);
+filmsPresenter.init();

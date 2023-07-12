@@ -1,4 +1,4 @@
-import { render } from '../framework/render.js';
+import { render, remove } from '../framework/render.js';
 import SortView from '../view/sort-view.js';
 import FilmsView from '../view/films-view.js';
 import FilmListView from '../view/film-list/film-list-view.js';
@@ -43,9 +43,8 @@ export default class FilmsPresenter {
   #renderFilm(film, container) {
     const filmCardComponent = new FilmCardView(film);
 
-    const linkFilmCardElement = filmCardComponent.element.querySelector('a');
 
-    linkFilmCardElement.addEventListener('click', () => {
+    filmCardComponent.setClickHandler(() => {
       this.#addFilmDetailsComponent(film);
       document.addEventListener('keydown', this.#onEscKeyDown);
     });
@@ -58,9 +57,7 @@ export default class FilmsPresenter {
 
     this.#filmDetailsComponent = new FilmDetailsView(film, comments);
 
-    const closeButtonFilmDetailsElement = this.#filmDetailsComponent.element.querySelector('.film-details__close-btn');
-
-    closeButtonFilmDetailsElement.addEventListener('click', () => {
+    this.#filmDetailsComponent.setCloseClickHandler(() => {
       this.#removeFilmDetailsComponent();
       document.removeEventListener('keydown', this.#onEscKeyDown);
     });
@@ -74,7 +71,7 @@ export default class FilmsPresenter {
   };
 
   #removeFilmDetailsComponent = () => {
-    this.#filmDetailsComponent.element.remove();
+    remove(this.#filmDetailsComponent);
     this.#filmDetailsComponent = null;
     document.body.classList.remove('hide-overflow');
   };
@@ -87,9 +84,7 @@ export default class FilmsPresenter {
     }
   };
 
-  #filmButtonMoreClickHandler(evt) {
-    evt.preventDefault();
-
+  #filmButtonMoreClickHandler = () => {
     this.#films
       .slice(this.#renderedFilmCount, this.#renderedFilmCount + FILM_COUNT_PER_STEP)
       .forEach((film) => {
@@ -99,10 +94,9 @@ export default class FilmsPresenter {
     this.#renderedFilmCount += FILM_COUNT_PER_STEP;
 
     if (this.#renderedFilmCount >= this.#films.length) {
-      this.#filmButtonMoreComponent.element.remove();
-      this.#filmButtonMoreComponent.removeElement();
+      remove(this.#filmButtonMoreComponent);
     }
-  }
+  };
 
   #renderFilmBoard() {
     if (this.#films.length === 0) {
@@ -125,9 +119,7 @@ export default class FilmsPresenter {
     if(this.#films.length > FILM_COUNT_PER_STEP) {
       render(this.#filmButtonMoreComponent, this.#filmListComponent.element);
 
-      this.#filmButtonMoreComponent
-        .element
-        .addEventListener('click', (evt) => this.#filmButtonMoreClickHandler(evt));
+      this.#filmButtonMoreComponent.setClickHandler(this.#filmButtonMoreClickHandler);
     }
   }
 }

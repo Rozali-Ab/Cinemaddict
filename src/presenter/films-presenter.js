@@ -1,3 +1,4 @@
+import { render } from '../framework/render.js';
 import SortView from '../view/sort-view.js';
 import FilmsView from '../view/films-view.js';
 import FilmListView from '../view/film-list/film-list-view.js';
@@ -7,7 +8,6 @@ import FilmButtonMoreView from '../view/film-button-more-view.js';
 import FilmCardView from '../view/film-card/film-card-view.js';
 import FilmDetailsView from '../view/film-details-popup/film-details-view.js';
 
-import { render } from '../render.js';
 import { FILM_COUNT_PER_STEP } from '../const.js';
 
 

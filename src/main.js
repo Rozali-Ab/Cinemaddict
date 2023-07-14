@@ -7,6 +7,8 @@ import FilmsModel from './model/films-model.js';
 import CommentsModel from './model/comments-model.js';
 
 import { render } from './framework/render.js';
+import { getUserStatus } from './utils/user.js';
+import { generateFilter } from './mock/filter.js';
 
 const body = document.querySelector('body');
 const header = document.querySelector('.header');
@@ -18,8 +20,12 @@ const commentsModel = new CommentsModel(filmsModel);
 
 const filmsPresenter = new FilmsPresenter(main, filmsModel, commentsModel);
 
-render(new HeaderProfileView(), header);
-render(new FilterView(), main);
-render(new FooterStatisticsView(), footerStatistics);
+const userStatus = getUserStatus(filmsModel.get());
+const filters = generateFilter(filmsModel.get());
+const filmCount = filmsModel.get().length;
+
+render(new HeaderProfileView(userStatus), header);
+render(new FilterView(filters), main);
+render(new FooterStatisticsView(filmCount), footerStatistics);
 
 filmsPresenter.init();

@@ -2,16 +2,25 @@ import {getRandomInteger, getRandomValue} from '../utils.js';
 import {FILM_COUNT} from '../const.js';
 import {
   NAME_COUNT, MAX_COMMENTS_ON_FILM, GenreCount, Rating,
-  AgeRating, Runtime, YearsDuration, names, surnames,
-  titles, posters, genres, description, countries,
+  AgeRating, Runtime, YearsDuration, DaysDuration, DateType,
+  names, surnames, titles, posters, genres, description, countries,
 } from './const.js';
 
-const getDate = () => {
+const getDate = (type) => {
   const date = new Date();
 
-  date.setFullYear(
-    date.getFullYear() - getRandomInteger(YearsDuration.MIN, YearsDuration.MAX)
-  );
+  switch (type) {
+    case DateType.FILM_INFO:
+      date.setFullYear(
+        date.getFullYear() - getRandomInteger(YearsDuration.MIN, YearsDuration.MAX)
+      );
+      break;
+    case DateType.USER_DETAILS:
+      date.setDate(
+        date.getDate() - getRandomInteger(DaysDuration.MIN, DaysDuration.MAX)
+      );
+      break;
+  }
 
   return date.toISOString();
 };
@@ -26,7 +35,7 @@ const generateFilm = () => ({
   writers: Array.from({length: NAME_COUNT}, () => `${getRandomValue(names)} ${getRandomValue(surnames)}`),
   actors: Array.from({length: NAME_COUNT}, () => `${getRandomValue(names)} ${getRandomValue(surnames)}`),
   release: {
-    date: getDate(),
+    date: getDate(DateType.FILM_INFO),
     releaseСountry: getRandomValue(countries)
   },
   runtime: getRandomInteger(Runtime.MIN, Runtime.MAX),
@@ -39,6 +48,8 @@ const generateFilms = () => {
 
   let totalCommentsCount = 0;
 
+  const getWatchingDate = () => getDate(DateType.USER_DETAILS);
+
   return films.map((film, index) => {
     const hasComments = getRandomInteger(0, 1);
 
@@ -48,6 +59,8 @@ const generateFilms = () => {
 
     totalCommentsCount += filmCommentsCount;
 
+    const alreadyWatched = Boolean(getRandomInteger(0, 1));
+
     return {
       id: String(index + 1),
       comments: (hasComments)
@@ -56,6 +69,12 @@ const generateFilms = () => {
         )
         : [],
       filmInfo: film,
+      userDetails: {
+        watchlist: Boolean(getRandomInteger(0, 1)),
+        alreadyWatched,
+        watchingDate: (alreadyWatched) ? getWatchingDate() : null,
+        favorite: Boolean(getRandomInteger(0, 1))
+      }
     };
   });
 };
